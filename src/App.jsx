@@ -1,12 +1,8 @@
 import React from "react";
-import Project from "./components/project1/project";
+import TodoList from "./components/project2/TodoList";
 
 const App = () => {
-  return (
-    <div>
-      <Project />
-    </div>
-  );
+  return <TodoList />;
 };
 
 export default App;

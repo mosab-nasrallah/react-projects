@@ -1,0 +1,248 @@
+* {
+  margin: 0;
+  padding: 0;
+  /* margin-bottom: 2%;
+  margin-top: 5%; */
+}
+:root {
+  --duration: 200ms;
+}
+
+html {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#root {
+  width: 100%;
+  max-width: -webkit-fill-available;
+  overflow: hidden;
+  display: contents;
+}
+
+body {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  max-width: 100%;
+  background-color: rgb(16, 16, 16);
+}
+
+/* .progressive-blur {
+  position: absolute;
+  border-radius: 5px;
+  width: -webkit-fill-available;
+  height: 25px;
+  background-color: rgb(64, 64, 64);
+  filter: blur(3px);
+  z-index: 1;
+  right: 4px;
+} */
+.top {
+  top: 165px;
+}
+.bottom {
+  bottom: 86px;
+}
+.title {
+  color: #03fdc3;
+  align-self: center;
+  font-family: tahoma;
+  font-weight: bolder;
+  font-size: 50px;
+  text-align: center;
+}
+
+.container {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  min-width: min(80%, 50em);
+  max-width: min(81%, 50.5em);
+  position: relative;
+}
+.todos {
+  display: flex;
+  /* min-width: min(80%, 50em); */
+  padding: 15px 0;
+  border-radius: 20px;
+  flex-direction: column;
+  overflow-y: auto;
+  gap: 10px;
+  max-height: 50%;
+  align-items: center;
+}
+
+.todos::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 30px;
+  background-color: rgb(51, 51, 51);
+}
+.todos::-webkit-scrollbar-thumb {
+  background-color: rgb(157, 156, 156);
+  border-radius: 30px;
+  cursor: pointer;
+}
+.settings {
+  position: absolute;
+  color: white;
+  top: 60px;
+  left: 35px;
+  font-size: 20px;
+  font-family: "tahoma";
+}
+.todo {
+  position: relative;
+  display: flex;
+  border-radius: 30px;
+  background-color: rgb(51, 51, 51);
+  padding: 15px;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  width: -webkit-fill-available;
+  align-items: center;
+  color: white;
+}
+
+.time-added {
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  color: #03fdc3;
+}
+
+.inputArea {
+  display: flex;
+  flex-wrap: wrap;
+  width: inherit;
+  min-height: 50px;
+  box-sizing: border-box;
+  background-color: inherit;
+  display: flex;
+  /* padding: 0px 0px 0px; */
+  border: 1px solid grey;
+  border-radius: 99999px;
+}
+
+.input {
+  flex: 1 1;
+  background-color: inherit;
+  border: none;
+
+  border-radius: 99999px;
+  /* box-decoration-break: unset; */
+  color: white;
+}
+.add {
+  width: 100px;
+  /* height: 100px; */
+  border: none;
+  border-radius: 99999px;
+  background-color: #03fdc3;
+  color: black;
+  transition: var(--duration);
+  /* min-height: ; */
+}
+.add:hover {
+  transition: var(--duration);
+  font-size: larger;
+  color: white;
+  text-shadow: 0 0 10px #ffffff;
+  background-color: #07a07c;
+}
+input[type="checkbox"] {
+  appearance: none;
+  border-radius: 50%;
+  margin-right: 15px;
+  min-width: 20px;
+  height: 20px;
+  border: 2px solid #03fdc3;
+  display: inline-block;
+  vertical-align: middle;
+  transition: var(--duration);
+}
+input[type="checkbox"]:checked {
+  background-color: #03fdc3;
+  transition: var(--duration);
+  border-color: #07a07c;
+}
+input[type="checkbox"]:checked:hover {
+  border-color: #03fdc3;
+  box-shadow: 0 0 10px 5px #07a07c;
+}
+input[type="checkbox"]:checked::before {
+  content: "\2713";
+  display: block;
+  color: #000000;
+  font-size: 21px;
+  text-align: center;
+  line-height: 20px;
+  transition: var(--duration);
+}
+input[type="checkbox"]:hover {
+  transition: var(--duration);
+  /* border-color: #07a07c; */
+  box-shadow: 0 0 10px 5px #03fdc3;
+}
+input[type="text"] {
+  font-size: 24px;
+  min-width: 50px;
+}
+input[type="text"]:focus {
+  outline: none;
+}
+
+.delete {
+  max-width: -webkit-fill-available;
+  max-height: fit-content;
+  background-color: transparent;
+  color: rgb(157, 156, 156);
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+  transition: var(--duration);
+  border-radius: 100%;
+  outline: none;
+  border: none;
+}
+.delete:hover {
+  color: white;
+  text-shadow: 0px 0px 10px #ffffff;
+  transition: var(--duration);
+}
+
+.todo h2 {
+  display: flex;
+  align-items: center; /* This centers items vertically */
+  gap: 15px; /* This adds a space between the checkbox and the text */
+}
+.todo h2 .todo-text {
+  /* Now you can style the text itself separately*/
+  position: relative;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+.todo h2 {
+  /* This ensures the color transition happens smoothly */
+  transition: color var(--duration) ease;
+}
+
+.todo h2.done-text {
+  /* This is the class that will be added when the todo is completed */
+  color: rgb(157, 156, 156); /* Mute the color */
+  text-decoration: line-through; /* This is applied instantly, but the color change will transition */
+  text-decoration-color: #03fdc3;
+}

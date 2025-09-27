@@ -10,6 +10,8 @@ const FetchData = ({ id }) => {
 
   useEffect(() => {
     if (!fetchedData) return;
+    console.log(fetchedData);
+
     const {
       idMeal,
       strMeal,

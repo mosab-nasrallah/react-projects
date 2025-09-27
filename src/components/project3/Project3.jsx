@@ -9,8 +9,8 @@ const Project3 = () => {
   return (
     <div>
       {/* <FetchData id={id} /> */}
-      {/* <Categories /> */}
-      <AllMeals category={category} />
+      <Categories />
+      {/* <AllMeals category={category} /> */}
     </div>
   );
 };

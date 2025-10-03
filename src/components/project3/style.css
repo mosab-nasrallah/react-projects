@@ -29,17 +29,19 @@ body {
 .master {
   position: relative;
   max-width: 85vw;
+  min-width: 85vw;
   display: flex;
   min-height: 85vh;
-  border: 4px solid white;
-  border-radius: 20px;
+  border: 6px solid white;
+  box-shadow: 0px 0px 20px 2px white;
+  border-radius: 50px;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: start;
   padding: 80px 50px 10px 50px;
   background-color: rgba(240, 255, 255, 0.198);
   -webkit-backdrop-filter: blur(15px) brightness(80%);
   backdrop-filter: blur(15px) brightness(50%);
-  gap: 25px;
+  gap: 5%;
   align-items: center;
 }
 .categories-container {
@@ -61,6 +63,15 @@ body {
   border-radius: 10px;
   /* background: rgb(239, 239, 239); */
   color: white;
+  transition: 150ms ease;
+}
+
+.category:hover {
+  box-shadow: 0px 0px 5px 2px rgb(255, 252, 252);
+  z-index: 0;
+  border: 2px solid white;
+  scale: 1.1;
+  transition: 150ms ease;
 }
 .category-image {
   aspect-ratio: 1.6 /1;
@@ -69,7 +80,7 @@ body {
 
 .meals-container::-webkit-scrollbar {
   border-radius: 50px;
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.224);
   /* width: 5px; */
   height: 5px;
 }
@@ -83,16 +94,18 @@ body {
 .meals-container {
   /* max-width: 50vw;
   display: flex;
-  overflow-x: scroll;
   overflow-y: hidden;
   min-height: fit-content;
   gap: 50px; */
+  overflow-x: scroll;
+  overflow-y: hidden;
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-auto-columns: max-content;
   grid-auto-flow: column;
-  overflow: scroll;
   gap: 25px;
+  border-radius: 15px;
+  padding: 25px;
 }
 .meal {
   max-height: fit-content;
@@ -102,6 +115,14 @@ body {
   border: 2px solid grey;
   position: relative;
   border-radius: 15px;
+  transition: 150ms ease;
+}
+.meal:hover {
+  box-shadow: 0px 0px 8px 2px rgb(255, 252, 252);
+  border: 2px solid white;
+  scale: 1.2;
+  z-index: 1;
+  transition: 150ms ease;
 }
 
 .meals-images {
@@ -127,7 +148,7 @@ body {
   width: -webkit-fill-available;
   -webkit-backdrop-filter: blur(10px) brightness(80%);
   backdrop-filter: blur(15px) brightness(75%);
-  border-radius: 0px 00px 15px 15px;
+  border-radius: 0px 0px 12px 12px;
   height: 20%;
   line-height: 250%;
   font-size: 20px;
@@ -154,12 +175,25 @@ body {
   overflow: hidden;
   -ms-overflow-style: none;
 }
-
+.selected-meal-popup::-webkit-scrollbar {
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 0.224);
+  /* width: 5px; */
+  height: 5px;
+}
+.selected-meal-popup::-webkit-scrollbar-thumb {
+  background-color: rgb(43, 40, 40);
+  /* border: 2px solid rgba(180, 180, 180, 0.62); */
+  height: 5px;
+  border-radius: 9999px;
+}
 .selected-meal-popup {
   /* positioning */
+  box-shadow: 0px 0px 20px 2px white;
   position: fixed;
+  overflow-y: none;
   display: none;
-  z-index: 1;
+  z-index: 9999;
   top: 50%;
   left: 50%;
   justify-content: center;
@@ -168,10 +202,10 @@ body {
   /* container properties (how to spell proprties ?) */
   border-radius: 50px;
   min-width: 90vw;
-  min-height: 40vw;
+  min-height: 45vw;
   max-height: 90vh;
   box-sizing: content-box;
-  border: 5px solid rgba(180, 180, 180, 0.62);
+  border: 6px solid white;
 
   border-radius: 15px;
 
@@ -180,7 +214,7 @@ body {
   backdrop-filter: blur(20px) brightness(80%);
 
   /* Behavior */
-  overflow: auto;
+  overflow: none;
 }
 .active {
   display: flex;
@@ -188,4 +222,206 @@ body {
 .hide {
   -webkit-backdrop-filter: unset;
   backdrop-filter: unset;
+  border: unset;
+  box-shadow: unset;
+  background-color: unset;
+}
+
+.popup-content {
+  display: grid;
+  color: white;
+  /* grid-template-rows: repeat(3, 1fr); */
+  grid-template-rows: 8% 60% 50%;
+  padding: 20px 50px 50px 50px;
+  grid-template-areas:
+    "nav nav nav"
+    "aside meal-image main"
+    "p p p";
+  gap: 2%;
+  overflow: hidden;
+}
+.meal-image {
+  grid-area: meal-image;
+  height: fit-content;
+}
+nav {
+  display: flex;
+  max-height: 10vh;
+  justify-content: space-between;
+  grid-area: nav;
+  border-bottom: 2px solid grey;
+  max-height: fit-content;
+}
+
+aside {
+  display: flex;
+  grid-area: aside;
+  flex-direction: column;
+  width: fit-content;
+  /* max-width: 50%; */
+}
+a > div > h1 {
+  text-align: center;
+  border-radius: 9999999px;
+  text-shadow: 0px 5px 5px black;
+  color: white;
+  position: absolute;
+  font-size: 5rem;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+}
+a > div {
+  position: relative;
+  width: fit-content;
+}
+a {
+  text-decoration: none;
+}
+.tags {
+  margin-top: 10%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2%;
+  font-size: 20px;
+  justify-content: space-evenly;
+  font-size: small;
+  text-align: center;
+  color: white;
+  font-weight: 700;
+}
+.tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  aspect-ratio: 1 / 1;
+  border: 2px solid white;
+  padding: 10px;
+  border-radius: 99999px;
+}
+.popup-content > p {
+  grid-area: p;
+}
+.instructions::-webkit-scrollbar {
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 0.224);
+  width: 5px;
+}
+.instructions::-webkit-scrollbar-thumb {
+  background-color: rgb(43, 40, 40);
+  height: 5px;
+  border-radius: 9999px;
+}
+.hover {
+  scale: 1.1;
+  min-height: fit-content;
+  max-width: 80vw;
+  transform: translate(0, -25%);
+  background-color: rgba(38, 35, 35, 0.791) !important;
+  text-align: center;
+  /* font-weight: bolder; */
+  font-size: large;
+  border-radius: 20px !important;
+  overflow: scroll;
+  z-index: 99999999999;
+  transition: 150ms ease;
+}
+.instructions {
+  transition: 150ms ease;
+  grid-area: "instructions";
+  background-color: rgba(38, 35, 35, 0.537);
+  overflow-y: scroll;
+  padding: 20px 20px;
+  max-height: 20vh;
+  border-radius: 15px;
+}
+button:hover {
+  scale: 1.1;
+  transition: 150ms ease;
+  box-shadow: 0 0 5px 5px white;
+  border: 1px solid white;
+}
+button {
+  transition: 150ms ease;
+  background: unset;
+  border: unset;
+  width: fit-content;
+  background-color: rgba(38, 35, 35, 0.537);
+
+  height: fit-content;
+  padding: 10px 20px;
+  border: 3px solid grey;
+  border-radius: 99999px;
+  color: white;
+  font-size: larger;
+  font-weight: 600;
+}
+
+.popup-content img {
+  height: 40vh;
+}
+.meal-image:hover {
+  scale: 1.1;
+  transition: 150ms ease;
+}
+.meal-image {
+  transition: 150ms ease;
+  border-radius: 15px;
+  align-self: stretch;
+}
+.youtube-link:hover {
+  scale: 1.1;
+  transition: 150ms ease;
+}
+.youtube-link {
+  transition: 150ms ease;
+  border-radius: 15px;
+  align-self: stretch;
+}
+main:hover {
+  scale: 1.1;
+  transition: 150ms ease;
+  z-index: 99999;
+  border: 1px solid white;
+  box-shadow: 0px 0px 10px 3px white;
+}
+.ingredient:hover {
+  scale: 1.2;
+  transform: translate(10%);
+  transition: 150ms ease;
+}
+main {
+  transition: 150ms ease;
+  grid-area: "main-content";
+  min-height: -webkit-fill-available;
+  min-width: 15vw;
+  background-color: rgba(38, 35, 35, 0.537);
+  border: 1px solid white;
+  border-radius: 15px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 15% 80%;
+  grid-template-areas:
+    "ingredients-header measurements-header"
+    "ingredients-container ingredients-container";
+}
+.ingredients-container {
+  grid-area: ingredients-container;
+}
+
+.ingredient {
+  transition: 150ms ease;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: start;
+}
+.measurements-header {
+  grid-area: measurements-header;
+}
+.ingredients-header {
+  grid-area: ingredients-header;
 }

@@ -1,15 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAxios } from "./useAxios";
-// import { motion, useInView, useAnimation } from "motion/react-client";
 import { motion, useInView, useAnimation } from "framer-motion";
-import { div } from "motion/react-client";
 
 const FetchData = ({ id, onGoBack }) => {
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
   const { data, loading, error } = useAxios(url);
   const [meal, setMeal] = useState({});
   const mainControls = useAnimation();
-
+  const [hoverClass, setHoverClass] = useState(null);
+  const increaseSize = () => {
+    const timer = setTimeout(() => {
+      setHoverClass("hover");
+    }, 2000);
+    return timer;
+  };
+  const resetSize = (timer) => {
+    setHoverClass(null);
+    clearTimeout(timer);
+  };
   const fetchedData = data ? data.meals[0] : null;
 
   //TODO popup handling
@@ -46,7 +54,8 @@ const FetchData = ({ id, onGoBack }) => {
         break;
       }
     }
-
+    const YTID = strYoutube ? strYoutube.split("=")[1] : "";
+    // console.log(YTID);
     // const tagsList = [];
     // Object.keys(fetchedData).forEach((key) => {
     //   if (key.startsWith("strIngredient") && fetchedData[key]) {
@@ -64,6 +73,7 @@ const FetchData = ({ id, onGoBack }) => {
           .map((tag) => tag.trim())
           .filter((tag) => tag.length > 0)
       : [];
+
     const meal = {
       mealId: idMeal,
       mealName: strMeal,
@@ -74,8 +84,9 @@ const FetchData = ({ id, onGoBack }) => {
       instructions: strInstructions,
       Youtube: strYoutube,
       tags: tagsList,
+      YoutubeId: YTID,
+      // YoutubeThumbNail: `https://img.youtube.com/vi/${YoutubeId}/default.jpg`,
     };
-    console.log(meal);
 
     setMeal(meal);
   }, [fetchedData]);
@@ -91,46 +102,59 @@ const FetchData = ({ id, onGoBack }) => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
-      <button onClick={onGoBack}>Back</button>
+    <div className="popup-content">
+      <nav>
+        <button onClick={onGoBack}> ← Back To Main Course</button>
+        <h1>{meal.mealName}</h1>
+        <h1 className="category-name">{meal.category}</h1>
+      </nav>
 
-      <h1 style={{ display: "inline" }}>{meal.mealName}</h1>
-      <h1 style={{ display: "inline", marginLeft: "50px" }}>{meal.category}</h1>
-      <img src={meal.thumbnail} alt={meal.mealName} />
-      <p>{meal.instructions}</p>
-
-      <div>
-        <div>
+      <img className="meal-image" src={meal.thumbnail} alt={meal.mealName} />
+      <main>
+        <header className="ingredients-header">Ingredients</header>
+        <header className="measurements-header">Measurements</header>
+        <div className="ingredients-container">
           {meal.ingredients && meal.ingredients.length > 0 ? (
             meal.ingredients.map((ingredient, index) => (
               <div className="ingredient" key={index}>
-                <motion.div
-                  initial="hidden"
-                  variants={{
-                    hidden: { opacity: 0, y: 75 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                  animate={mainControls}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <span>{ingredient} </span>
-                  <span>{meal.measurements[index]}</span>
-                </motion.div>
+                <span>{ingredient} </span>
+                <span>{meal.measurements[index]}</span>
               </div>
             ))
           ) : (
             <p>Ingredients list not available.</p>
           )}
         </div>
-        <div>{meal.Youtube}</div>
-        <div>
+      </main>
+      <p
+        onMouseEnter={increaseSize}
+        onMouseLeave={() => resetSize(increaseSize)}
+        className={hoverClass ? `instructions ${hoverClass}` : `instructions`}
+      >
+        {meal.instructions}
+      </p>
+      <aside className="youtube-video">
+        <a href={meal.Youtube}>
+          <div>
+            <img
+              className="youtube-link"
+              src={`https://img.youtube.com/vi/${meal.YoutubeId}/maxresdefault.jpg`}
+            />
+            <h1>▶</h1>
+          </div>
+        </a>
+        {/* <div className="tags">
           {meal.tags && meal.tags.length > 0 ? (
-            meal.tags.map((tag, index) => <div key={index}>{tag}</div>)
+            meal.tags.map((tag, index) => (
+              <div className="tag" key={index}>
+                {tag}
+              </div>
+            ))
           ) : (
             <p>tags list not available.</p>
           )}
-        </div>
-      </div>
+        </div> */}
+      </aside>
     </div>
   );
 };
